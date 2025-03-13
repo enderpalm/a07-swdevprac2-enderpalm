@@ -28,7 +28,8 @@ export default function Card({ venueName, imgSrc, onRatingChange }: Props) {
           data-testid={robotId}
           defaultValue={0}
           precision={1}
-          onChange={(event, value) => onRatingChange(venueName, value)}
+          onClick={(event) => event.stopPropagation()}
+          onChange={(_, value) => onRatingChange(venueName, value)}
         />
       </div>
     </InteractiveCard>

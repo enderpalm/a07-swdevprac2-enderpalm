@@ -18,7 +18,7 @@ const VenueDetailPage = ({ params }: { params: { vid: string } }) => {
 
   return (
     <main className="flex flex-wrap justify-center gap-2 m-4">
-      <div className="w-80 rounded-t-lg overflow-hidden relative aspect-[3/2]">
+      <div className="w-80 rounded-lg overflow-hidden relative aspect-[3/2] shadow-md">
         <Image
           src={mockVenueRepo.get(params.vid).image}
           alt={mockVenueRepo.get(params.vid).name}

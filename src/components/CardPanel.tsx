@@ -2,6 +2,7 @@
 
 import React, { useReducer } from "react";
 import Card from "./Card";
+import Link from "next/link";
 
 const CardPanel = () => {
   const ratingReducer = (
@@ -46,18 +47,20 @@ const CardPanel = () => {
     <>
       <section className="m-1 flex flex-wrap gap-2">
         {mockVenueRepo.map((venue) => (
-          <Card
-            key={venue.vid}
-            venueName={venue.name}
-            imgSrc={venue.image}
-            onRatingChange={(venue: string, rating: number) =>
-              dispatchRatingChange({
-                type: "add",
-                venueName: venue,
-                rating: rating,
-              })
-            }
-          />
+          <Link href={`/venue/${venue.vid}`} key={venue.vid}>
+            <Card
+              key={venue.vid}
+              venueName={venue.name}
+              imgSrc={venue.image}
+              onRatingChange={(venue: string, rating: number) =>
+                dispatchRatingChange({
+                  type: "add",
+                  venueName: venue,
+                  rating: rating,
+                })
+              }
+            />
+          </Link>
         ))}
       </section>
       <section className="m-1 p-4">
