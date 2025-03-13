@@ -1,7 +1,7 @@
 import CardPanel from '@/components/CardPanel'
 import React from 'react'
 
-const page = () => {
+const VenuesPage = () => {
   return (
     <main>
         <CardPanel />
@@ -9,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default VenuesPage
