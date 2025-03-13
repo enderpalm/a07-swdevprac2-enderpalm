@@ -11,7 +11,7 @@ const CardPanel = () => {
     const newRatingMap = new Map(ratingMap);
     switch (action.type) {
       case "add":
-        newRatingMap.set(action.venueName, action.rating??0);
+        newRatingMap.set(action.venueName, action.rating ?? 0);
         return newRatingMap;
       case "remove":
         newRatingMap.delete(action.venueName);
@@ -29,37 +29,59 @@ const CardPanel = () => {
     ratingReducer,
     defaultRating
   );
-  const setterFunction = (venue: string, rating: number) =>
-    dispatchRatingChange({ type: "add", venueName: venue, rating: rating });
+
+  interface VenueRepo {
+    vid: string;
+    name: string;
+    image: string;
+  }
+
+  const mockVenueRepo: VenueRepo[] = [
+    { vid: "001", name: "The Bloom Pavilion", image: "/img/bloom.jpg" },
+    { vid: "002", name: "Spark Space", image: "/img/sparkspace.jpg" },
+    { vid: "003", name: "The Grand Table", image: "/img/grandtable.jpg" },
+  ];
+
   return (
     <>
       <section className="m-1 flex flex-wrap gap-2">
-        <Card
-          venueName="The Bloom Pavilion"
-          imgSrc="/img/bloom.jpg"
-          onRatingChange={setterFunction}
-        />
-        <Card
-          venueName="Spark Space"
-          imgSrc="/img/sparkspace.jpg"
-          onRatingChange={setterFunction}
-        />
-        <Card
-          venueName="The Grand Table"
-          imgSrc="/img/grandtable.jpg"
-          onRatingChange={setterFunction}
-        />
+        {mockVenueRepo.map((venue) => (
+          <Card
+            key={venue.vid}
+            venueName={venue.name}
+            imgSrc={venue.image}
+            onRatingChange={(venue: string, rating: number) =>
+              dispatchRatingChange({
+                type: "add",
+                venueName: venue,
+                rating: rating,
+              })
+            }
+          />
+        ))}
       </section>
-			<section className="m-1 p-4">
-				<h2 className="font-jetbrains font-semibold bg-black text-white w-fit px-2 py-1">Venue with Ratings {ratingMap.size}</h2>
-				<ul className="font-jetbrains my-2">
-					{Array.from(ratingMap).map(([venue, rating]) => (
-						<li key={venue} onClick={() => dispatchRatingChange({ type: "remove", venueName: venue, rating: 0 })} data-testid={venue}>
-							{venue}: {<b>{rating}</b>}
-						</li>
-					))}
-				</ul>
-			</section>
+      <section className="m-1 p-4">
+        <h2 className="font-jetbrains font-semibold bg-black text-white w-fit px-2 py-1">
+          Venue with Ratings {ratingMap.size}
+        </h2>
+        <ul className="font-jetbrains my-2">
+          {Array.from(ratingMap).map(([venue, rating]) => (
+            <li
+              key={venue}
+              onClick={() =>
+                dispatchRatingChange({
+                  type: "remove",
+                  venueName: venue,
+                  rating: 0,
+                })
+              }
+              data-testid={venue}
+            >
+              {venue}: {<b>{rating}</b>}
+            </li>
+          ))}
+        </ul>
+      </section>
     </>
   );
 };
